@@ -1,9 +1,9 @@
-<?php
+<?php 
 // ======================
 //   LOGIN INTRAESA
 // ======================
 
-require_once __DIR__ . '/config/db.php'; // aquí ya tienes db(), session_start(), etc.
+require_once __DIR__ . '/config/db.php';
 
 // Si ya hay sesión, mandamos según rol
 if (is_logged_in()) {
@@ -16,7 +16,6 @@ if (is_logged_in()) {
     } elseif ($role === 'client') {
         header('Location: ./client/envios.php');
     } else {
-        // fallback por si algún usuario no tiene rol claro
         header('Location: ./admin/dashboard.php');
     }
     exit;
@@ -26,7 +25,7 @@ $error = null;
 
 // Procesar login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Vamos a loguear SOLO por correo (aunque el label diga "Usuario")
+
     $email = trim($_POST['userNickname'] ?? '');
     $pass  = trim($_POST['userPassword'] ?? '');
 
@@ -59,10 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $u = $st->fetch(PDO::FETCH_ASSOC);
 
             if ($u && password_verify($pass, $u['password_hash'])) {
-                // si no tiene rol asignado en user_roles, lo tratamos como client
+
                 $roleName = $u['role'] ?: 'client';
 
-                // estructura nueva para helpers
                 $_SESSION['user'] = [
                     'id'    => (int)$u['id'],
                     'name'  => $u['name'],
@@ -70,12 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'roles' => [$roleName],
                 ];
 
-                // variables clásicas por compatibilidad
                 $_SESSION['user_id']  = (int)$u['id'];
                 $_SESSION['userName'] = $u['name'];
                 $_SESSION['role']     = $roleName;
 
-                // Redirigir según rol
+                // Redirección según rol
                 if ($roleName === 'admin') {
                     header('Location: ./admin/dashboard.php');
                 } elseif ($roleName === 'client') {
@@ -84,13 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header('Location: ./admin/dashboard.php');
                 }
                 exit;
+
             } else {
                 $error = "Usuario o contraseña incorrectos.";
             }
+
         } catch (Throwable $e) {
             $error = "Error al intentar iniciar sesión.";
-            // Si quieres debug:
-            // $error .= " Detalle: " . $e->getMessage();
         }
     }
 }
@@ -101,89 +98,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign in Form</title>
-  <link rel="stylesheet" href="./public/login/login.css" />
+  <title>Intraesa · Acceso</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- tu CSS nuevo -->
+  <link rel="stylesheet" href="./public/login.css" />
 </head>
 
 <body>
-  <main>
-    <div class="box">
-      <div class="inner-box">
-        <div class="forms-wrap">
-          <form action="" method="POST" autocomplete="off" class="sign-in-form">
-            <div class="logo">
-              <img src="./public/login/img/logoIntraensa.png" alt="logo" />
-            </div>
 
-            <div class="heading">
-              <h2>Bienvenido a Intraesa</h2>
-            </div>
+  <!-- Fondo animado -->
+  <div class="backdrop">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
 
-            <div class="actual-form">
-              <div class="input-wrap">
-                <input
-                  type="text"
-                  name="userNickname"
-                  class="input-field"
-                  autocomplete="off"
-                  required
-                />
-                <label>Usuario (correo)</label>
-              </div>
+  <main class="page">
 
-              <div class="input-wrap">
-                <input
-                  type="password"
-                  name="userPassword"
-                  class="input-field"
-                  autocomplete="off"
-                  required
-                />
-                <label>Contraseña</label>
-              </div>
+    <!-- PANEL IZQUIERDO (hero / marketing) -->
+ <section class="panel panel-hero">
+  <div class="brand">
+    <img src="./public/login/img/INTRAESA_logo_transparent.png" class="brand-logo" alt="Intraesa">
+  </div>
 
-              <input type="submit" value="Iniciar Sesión" class="sign-btn" />
-            </div>
 
-            <?php if (!empty($error)): ?>
-              <p style="color:red; margin-top:10px;">
-                <?= htmlspecialchars($error) ?>
-              </p>
-            <?php endif; ?>
+      <h1 class="hero-title">Gestiona tus envíos con un panel tan ágil como tú</h1>
+      <ul class="hero-list">
+        <li><i class="fa-solid fa-circle-check"></i> Autenticación segura y roles claros</li>
+        <li><i class="fa-solid fa-circle-check"></i> Créditos y recargas centralizados</li>
+        <li><i class="fa-solid fa-circle-check"></i> Seguimiento en tiempo real de envíos</li>
+      </ul>
+    </section>
 
-          </form>
-        </div>
-
-        <div class="carousel">
-          <div class="images-wrapper">
-            <img src="./public/login/img/image1.png" class="image img-1 show" alt="" />
-            <img src="./public/login/img/image2.png" class="image img-2" alt="" />
-            <img src="./public/login/img/image3.png" class="image img-3" alt="" />
-          </div>
-
-          <div class="text-slider">
-            <div class="text-wrap">
-              <div class="text-group">
-                <h2>Pide como millonario</h2>
-                <h2>Personalizalo a tu manera</h2>
-                <h2>Primero eres tú</h2>
-              </div>
-            </div>
-
-            <div class="bullets">
-              <span class="active" data-value="1"></span>
-              <span data-value="2"></span>
-              <span data-value="3"></span>
-            </div>
-          </div>
-        </div>
+    <!-- PANEL DERECHO (FORMULARIO) -->
+    <section class="panel panel-form">
+      <div class="panel-header">
+        <h2>Bienvenido</h2>
+        <p>Inicia sesión para continuar con tu cuenta</p>
       </div>
-    </div>
+
+      <form method="POST" autocomplete="off" class="form-card">
+
+        <label class="input-block">
+          <span class="input-label">Correo electrónico</span>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" name="userNickname" placeholder="tucorreo@empresa.com" required />
+          </div>
+        </label>
+
+        <label class="input-block">
+          <span class="input-label">Contraseña</span>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" name="userPassword" placeholder="••••••••" required />
+          </div>
+        </label>
+
+        <?php if (!empty($error)): ?>
+          <div class="alert">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span><?= htmlspecialchars($error) ?></span>
+          </div>
+        <?php endif; ?>
+
+        <button type="submit" class="primary-btn">
+          <span>Ingresar</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+      </form>
+
+    </section>
+
   </main>
 
-  <script src="./public/login/login.js"></script>
+  <!-- tu JS -->
+  <script src="./public/login.js"></script>
 </body>
 
 </html>

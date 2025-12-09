@@ -1,0 +1,171 @@
+/* ===========================
+   THEME INTRAESA - PANEL ADMIN
+   ESTILO FUTURISTA QUE COMBINA CON EL LOGIN
+=========================== */
+
+:root {
+  --bg: #0f172a;
+  --card: rgba(15, 23, 42, 0.55);
+  --card-strong: rgba(15, 23, 42, 0.82);
+  --primary: #4f46e5;
+  --accent: #22d3ee;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.12);
+  --radius: 18px;
+  --shadow: 0 24px 60px rgba(0,0,0,0.45);
+}
+
+/* FONDO GLOBAL */
+body {
+  background: radial-gradient(circle at 20% 20%, rgba(79, 70, 229, 0.18), transparent 40%),
+              radial-gradient(circle at 80% 0%, rgba(34, 211, 238, 0.14), transparent 30%),
+              var(--bg) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  color: var(--text) !important;
+}
+
+/* ===========================
+   NAVBAR SUPERIOR
+=========================== */
+
+.navbar {
+  background: var(--card-strong) !important;
+  border-bottom: 1px solid var(--border) !important;
+  backdrop-filter: blur(14px) !important;
+}
+
+.navbar-brand,
+.navbar .text-light {
+  color: var(--text) !important;
+  font-weight: 600 !important;
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  color: #0f172a !important;
+  padding: 6px 14px !important;
+}
+
+/* ===========================
+   SIDEBAR
+=========================== */
+
+.main-sidebar {
+  background: var(--card-strong) !important;
+  border-right: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.nav-link {
+  color: var(--muted) !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  padding: 10px 14px !important;
+  transition: 0.25s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255,255,255,0.06) !important;
+  color: var(--text) !important;
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* ===========================
+   CONTENEDORES / CARDS
+=========================== */
+
+.card,
+.intraesa-card {
+  background: var(--card) !important;
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--border) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  color: var(--text) !important;
+}
+
+.card-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  font-weight: 700 !important;
+}
+
+/* ===========================
+   TABLAS
+=========================== */
+
+.table {
+  color: var(--text) !important;
+  background: transparent !important;
+}
+
+.table thead {
+  background: rgba(255,255,255,0.06) !important;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* ===========================
+   BOTONES
+=========================== */
+
+.btn {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+  border: none !important;
+  color: #0f172a !important;
+}
+
+.btn-danger {
+  background: rgba(220,38,38,0.75) !important;
+  border: none !important;
+}
+
+.btn-warning {
+  background: rgba(251,191,36,0.75) !important;
+  color: #0f172a !important;
+  border: none !important;
+}
+
+.btn-info {
+  background: rgba(14,165,233,0.75) !important;
+  border: none !important;
+}
+
+/* ===========================
+   FORMULARIOS
+=========================== */
+
+.form-control {
+  background: rgba(255,255,255,0.07) !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+.form-control:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px rgba(34,211,238,0.25) !important;
+}
+
+/* Labels */
+.form-label {
+  color: var(--muted) !important;
+  font-weight: 500 !important;
+}
