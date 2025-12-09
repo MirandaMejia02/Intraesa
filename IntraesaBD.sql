@@ -7,10 +7,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-
--- ⚠️ OPCIONAL: si quieres borrar TODO antes, descomenta esto:
--- DROP SCHEMA IF EXISTS `intraesa`;
-
 CREATE SCHEMA IF NOT EXISTS `intraesa`
   DEFAULT CHARACTER SET utf8mb4
   DEFAULT COLLATE utf8mb4_unicode_ci;
@@ -237,9 +233,7 @@ ON DUPLICATE KEY UPDATE
   is_active   = VALUES(is_active),
   sort_order  = VALUES(sort_order);
 
--- ⚠️ Usuario admin de ejemplo (CAMBIA este hash luego):
--- password_hash aquí es solo un texto; cuando implementes registro/login,
--- usa password_hash() en PHP.
+
 INSERT INTO `users` (`id`, `name`, `email`, `password_hash`)
 VALUES (1, 'Admin', 'admin@example.com', 'CAMBIA_ESTE_HASH')
 ON DUPLICATE KEY UPDATE
